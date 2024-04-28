@@ -6,7 +6,7 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
 // this manifest is used temporarily for development purposes
 const manifestUrl =
-  "https://raw.githubusercontent.com/Licensure-TMA/frontend/main/tonconnect-manifest.json";
+  "https://raw.githubusercontent.com/Licensure-TMA/frontend/main/licensure-app/public/tonconnect-manifest.json";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
