@@ -1,0 +1,33 @@
+.App {
+  text-align: center;
+  background-color: #e6f7ff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+}
+
+.App-header {
+  background-color: #1890ff;
+  padding: 20px;
+  color: white;
+  border-radius: 8px;
+  width: 90%;
+  margin: auto;
+}
+
+.connect-wallet-btn {
+  margin-top: 20px;
+  background-color: #001529;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.connect-wallet-btn:hover {
+  background-color: #1890ff;
+}
