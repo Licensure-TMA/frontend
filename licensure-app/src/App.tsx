@@ -1,11 +1,22 @@
-import "./App.css";
-import { TonConnectButton } from "@tonconnect/ui-react";
+import React from 'react';
+import Header from './components/Header';
+import Main from './components/Main';
+import Footer from './components/Footer';
+import './index.css';
+import ConnectionStatus from './components/Check';
+import { useTonConnect } from './hooks/useTonConnect';
 
-function App() {
-
+const App: React.FC = () => {
+  const {connected} = useTonConnect()
+  
   return (
-    <TonConnectButton/>
+    <>
+      <Header />
+      <Main />
+      <ConnectionStatus isConnected={connected} />
+      <Footer />
+    </>
   );
-}
+};
 
 export default App;
