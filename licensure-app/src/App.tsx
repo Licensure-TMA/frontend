@@ -27,7 +27,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      {!contract && (
+      {!connected && (
         <>
           <Header />
           <Main />
@@ -35,9 +35,10 @@ const App: React.FC = () => {
           <Footer />
         </>
       )}
-      {contract && (
+      {connected && (
         <div className="contract-display-container">
           <Header />
+          <TonConnectButton className="center-button" style={{ float: "right" }}/>
           <ContractDisplay contract={contract} />
           <Footer />
         </div>
