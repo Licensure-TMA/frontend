@@ -11,6 +11,6 @@ docker rmi aleksglebov/licensure:front || true
 docker pull aleksglebov/licensure:front
 
 # Запустить новый контейнер
-docker run -p 80:80 -d --name front aleksglebov/licensure:front
+docker run -p 8080:80 -d --name front aleksglebov/licensure:front
 
 echo "Deployment completed successfully."
