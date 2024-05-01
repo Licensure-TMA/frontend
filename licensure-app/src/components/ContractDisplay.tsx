@@ -15,7 +15,7 @@ const ContractDisplay: React.FC<ContractDisplayProps> = ({ contract }) => {
 
   return (
     <div>
-      <h2>P2P Market</h2>
+      <h2>P2P-Market</h2>
       {Array.from(map._map.entries()).map(([key, value]) => (
         <div className="card" key={key}>
           <h3>{value.contentName}</h3>
