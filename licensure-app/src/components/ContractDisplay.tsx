@@ -1,4 +1,5 @@
 import React from 'react';
+import TransactionButton from './TransactionButton';
 
 interface ContractDisplayProps {
   contract: { $$type: "LicenseArray"; map: { _map: Map<string, any> }; length: bigint; } | undefined;
@@ -25,6 +26,11 @@ const ContractDisplay: React.FC<ContractDisplayProps> = ({ contract }) => {
               <span className="field-value">{fieldValue.toString()}</span>
             </div>
           ))}
+          <TransactionButton 
+            destination={value.sellerAddress}
+            comment="Привет, Лера!" // Вы можете также динамически изменить комментарий
+            amount={value.price} // Берем сумму из поля price каждого элемента
+          />
         </div>
       ))}
     </div>
