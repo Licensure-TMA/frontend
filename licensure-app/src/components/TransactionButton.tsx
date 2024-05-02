@@ -9,7 +9,7 @@ interface TransactionButtonProps {
 }
 
 export const TransactionButton: React.FC<TransactionButtonProps> = ({ destination, comment, amount }) => {
-    const [tonConnectUI, setOptions] = useTonConnectUI();
+    const [tonConnectUI] = useTonConnectUI();
 
     const sendTransaction = () => {
         const body = beginCell()
@@ -22,7 +22,7 @@ export const TransactionButton: React.FC<TransactionButtonProps> = ({ destinatio
             messages: [
                 {
                     address: destination,
-                    amount: toNano(amount).toString(), // Используем переданную сумму
+                    amount: toNano(amount).toString(),
                     payload: body.toBoc().toString("base64") // payload с комментарием в формате base64
                 }
             ]

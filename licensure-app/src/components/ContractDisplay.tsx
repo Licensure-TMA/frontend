@@ -27,9 +27,9 @@ const ContractDisplay: React.FC<ContractDisplayProps> = ({ contract }) => {
             </div>
           ))}
           <TransactionButton 
-            destination={value.sellerAddress}
-            comment="Привет, Лера!" // Вы можете также динамически изменить комментарий
-            amount={value.price} // Берем сумму из поля price каждого элемента
+            destination={value.sellerAddress.toString()}
+            comment="Buying a licence"
+            amount={value.price.toString()}
           />
         </div>
       ))}
