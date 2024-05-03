@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Header from './components/Header';
-import Main from './components/Main';
-import './index.css';
-import { useTonConnect } from './hooks/useTonConnect';
-import { useContract } from './hooks/useContract';
-import ContractDisplay from './components/ContractDisplay';
 import { TonConnectButton } from '@tonconnect/ui-react';
+import Header from '../components/Header';
+import { useContract } from '../hooks/useContract';
+import { useTonConnect } from '../hooks/useTonConnect';
+import ContractDisplay from '../components/ContractDisplay';
 
-const App: React.FC = () => {
+const Main: React.FC = () => {
   const { connected } = useTonConnect();
   const { mainContract } = useContract();
-  const [contract, setContract] = useState<{ $$type: "LicenseArray"; map: any; length: any; } | undefined>(undefined);
+  const [contract, setContract] = useState<{ $$type: 'LicenseArray'; map: unknown; length: unknown; } | undefined>(undefined);
 
   useEffect(() => {
     const fetchContract = async () => {
@@ -34,7 +32,8 @@ const App: React.FC = () => {
       {connected && (
         <div className="contract-display-container">
           <Header />
-          <TonConnectButton className="center-button" style={{ float: "right" }}/>
+          <TonConnectButton className="center-button" style={{ float: 'right' }}/>
+          {/* @ts-expect-error */}
           <ContractDisplay contract={contract} />
         </div>
       )}
@@ -42,4 +41,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Main;

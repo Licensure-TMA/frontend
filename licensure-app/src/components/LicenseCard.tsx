@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, CardActions, Chip, Grid, Divider, Box, useMediaQuery, useTheme } from '@mui/material';
+import { Card, CardContent, Typography, Chip, Grid, Divider, Box, useMediaQuery, useTheme } from '@mui/material';
 import TransactionButton from './TransactionButton';
 
 interface LicenseCardProps {
@@ -13,7 +13,7 @@ interface LicenseCardProps {
   currency: string;
 }
 
-const safeToString = (data: any) => {
+const safeToString = (data: unknown) => {
   return (data && typeof data.toString === 'function') ? data.toString() : '';
 };
 
@@ -33,7 +33,7 @@ const LicenseCard: React.FC<LicenseCardProps> = ({
   return (
     <Card sx={{ maxWidth: '100%', m: 2, padding: '20px' }}>
       <CardContent>
-      <Grid container alignItems="center" spacing={2}>
+        <Grid container alignItems="center" spacing={2}>
           <Grid item xs={9} sx={{ overflow: 'hidden' }}>
             <Typography 
               gutterBottom 
