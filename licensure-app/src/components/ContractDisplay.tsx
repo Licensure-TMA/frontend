@@ -1,11 +1,9 @@
 import React from 'react';
-import TransactionButton from './TransactionButton';
+import LicenseCard from './LicenseCard';
 
 interface ContractDisplayProps {
   contract: { $$type: "LicenseArray"; map: { _map: Map<string, any> }; length: bigint; } | undefined;
 }
-
-const excludedFields = ['$$type', 'licenseId', 'sellerAddress', 'buyerAddress'];
 
 const ContractDisplay: React.FC<ContractDisplayProps> = ({ contract }) => {
   if (!contract) {
@@ -16,22 +14,18 @@ const ContractDisplay: React.FC<ContractDisplayProps> = ({ contract }) => {
 
   return (
     <div>
-      <h2>P2P Market</h2>
       {Array.from(map._map.entries()).map(([key, value]) => (
-        <div className="card" key={key}>
-          <h3>{value.contentName}</h3>
-          {Object.entries(value).filter(([field]) => !excludedFields.includes(field) && field !== 'contentName').map(([field, fieldValue]: [string, any]) => (
-            <div key={field} className="field">
-              <span className="field-name">{field}:</span>
-              <span className="field-value">{fieldValue.toString()}</span>
-            </div>
-          ))}
-          <TransactionButton 
-            destination={value.sellerAddress.toString()}
-            comment="Buying a licence"
-            amount={value.price.toString()}
-          />
-        </div>
+        <LicenseCard
+          key={key}
+          contentName={value.contentName}
+          contentDescription={value.contentDescription || 'No description available'}
+          licenseType={value.licenseType}
+          category={value.contentCategory}
+          subcategory={value.contentSubcategory}
+          sellerAddress={value.sellerAddress}
+          price={value.price}
+          currency={value.currency}
+        />
       ))}
     </div>
   );

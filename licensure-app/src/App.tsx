@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Main from './components/Main';
-import Footer from './components/Footer';
 import './index.css';
-import ConnectionStatus from './components/Check';
 import { useTonConnect } from './hooks/useTonConnect';
 import { useContract } from './hooks/useContract';
 import ContractDisplay from './components/ContractDisplay';
@@ -31,8 +29,6 @@ const App: React.FC = () => {
         <>
           <Header />
           <Main />
-          <ConnectionStatus isConnected={connected} />
-          <Footer />
         </>
       )}
       {connected && (
@@ -40,7 +36,6 @@ const App: React.FC = () => {
           <Header />
           <TonConnectButton className="center-button" style={{ float: "right" }}/>
           <ContractDisplay contract={contract} />
-          <Footer />
         </div>
       )}
     </>

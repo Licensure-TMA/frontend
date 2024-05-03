@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTonConnectUI, SendTransactionRequest } from '@tonconnect/ui-react';
 import { toNano, beginCell } from 'ton-core';
+import { Button } from '@mui/material';
 
 interface TransactionButtonProps {
     destination: string;
@@ -33,9 +34,7 @@ export const TransactionButton: React.FC<TransactionButtonProps> = ({ destinatio
 
     return (
         <div>
-            <button onClick={sendTransaction}>
-                Buy
-            </button>
+            <Button onClick={sendTransaction} variant="contained" size="large">Buy</Button>
         </div>
     );
 };

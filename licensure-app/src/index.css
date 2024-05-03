@@ -7,18 +7,8 @@ html, body {
   flex-direction: column;
 }
 
-header, footer, main {
+header, main {
   font-family: 'Roboto', sans-serif;
-}
-
-#root, .App {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-header, footer {
-  flex-shrink: 0;
 }
 
 main {
@@ -29,19 +19,12 @@ main {
   align-items: center;
 }
 
-footer {
+header {
+  flex-shrink: 0;
   background-color: #24A1DE;
   color: #ffffff;
   padding: 10px 20px;
-  text-align: center;
-}
-
-header {
-background-color: #24A1DE;
-color: #ffffff;
-padding: 10px 20px;
-text-align: left;
-
+  text-align: left;
 }
 
 .welcome-text {
@@ -56,10 +39,6 @@ text-align: left;
   cursor: pointer;
 }
 
-footer {
-  font-size: 12px;
-}
-
 @media (max-width: 768px) {
   .welcome-text {
       font-size: 16px;
@@ -69,67 +48,4 @@ footer {
   .center-button {
       padding: 8px 16px;
   }
-}
-
-.connection-status {
-  display: flex;
-  align-items: center;
-}
-
-.status-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 5px;
-}
-
-.connected-dot {
-  background-color: green;
-}
-
-.waiting-dot {
-  background-color: red;
-}
-
-.status-text {
-  font-weight: bold;
-}
-
-.card {
-border: 1px solid #ccc;
-border-radius: 5px;
-padding: 10px;
-margin-bottom: 20px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-font-family: 'Roboto', sans-serif;
-margin-right: 3%;
-margin-left: 3%;
-}
-
-.card h3 {
-margin-top: 0;
-}
-
-h2 {
-text-align: center;
-}
-
-.card pre {
-white-space: pre-wrap;
-word-wrap: break-word;
-}
-
-.field {
-display: flex;
-margin-bottom: 5px;
-}
-
-.field-name {
-font-weight: bold;
-margin-right: 5px;
-}
-
-.field-value {
-word-break: break-all;
 }
