@@ -16,6 +16,7 @@ const ContractDisplay: React.FC<ContractDisplayProps> = ({ contract }) => {
     <div>
       {Array.from(map._map.entries()).map(([key, value]) => (
         <LicenseCard
+          licenseId={value.licenseId}
           key={key}
           contentName={value.contentName}
           contentDescription={value.contentDescription || 'No description available'}
@@ -25,6 +26,7 @@ const ContractDisplay: React.FC<ContractDisplayProps> = ({ contract }) => {
           sellerAddress={value.sellerAddress}
           price={value.price}
           currency={value.currency}
+          status={value.status}
         />
       ))}
     </div>

@@ -3,6 +3,7 @@ import { Card, CardContent, Typography, CardActions, Chip, Grid, Divider, Box, u
 import TransactionButton from './TransactionButton';
 
 interface LicenseCardProps {
+  licenseId: bigint;
   contentName: string;
   contentDescription: string;
   licenseType: string;
@@ -11,6 +12,7 @@ interface LicenseCardProps {
   sellerAddress: string;
   price: number;
   currency: string;
+  status: string;
 }
 
 const safeToString = (data: any) => {
@@ -18,6 +20,7 @@ const safeToString = (data: any) => {
 };
 
 const LicenseCard: React.FC<LicenseCardProps> = ({
+  licenseId,
   contentName,
   contentDescription,
   licenseType,
@@ -25,7 +28,8 @@ const LicenseCard: React.FC<LicenseCardProps> = ({
   subcategory,
   sellerAddress,
   price,
-  currency
+  currency,
+  status
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -55,6 +59,7 @@ const LicenseCard: React.FC<LicenseCardProps> = ({
               destination={safeToString(sellerAddress)}
               comment="Buying a licence"
               amount={safeToString(price)}
+              licenseId={licenseId}
             />
           </Grid>
         </Grid>
@@ -73,6 +78,9 @@ const LicenseCard: React.FC<LicenseCardProps> = ({
           </Typography>
           <Typography sx={{ fontWeight: 'bold', color: '#0372A8', whiteSpace: 'nowrap', mt: isMobile ? 1 : 0 }}>
             {safeToString(price)} {safeToString(currency)}
+          </Typography>
+          <Typography sx={{ fontWeight: 'bold', color: '#0372A8', whiteSpace: 'nowrap', mt: isMobile ? 1 : 0 }}>
+            {safeToString(status)}
           </Typography>
         </Box>
       </CardContent>

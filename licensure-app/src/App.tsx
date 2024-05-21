@@ -15,7 +15,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchContract = async () => {
       if (connected && mainContract) {
-        const contractData = await mainContract;
+        const contractData = await mainContract.getArrayOfLicenses();
         setContract(contractData);
       }
     };
@@ -27,14 +27,13 @@ const App: React.FC = () => {
     <>
       {!connected && (
         <>
-          <Header />
           <Main />
         </>
       )}
       {connected && (
         <div className="contract-display-container">
           <Header />
-          <TonConnectButton className="center-button" style={{ float: "right" }}/>
+          <TonConnectButton style={{ float: "right" }}/>
           <ContractDisplay contract={contract} />
         </div>
       )}

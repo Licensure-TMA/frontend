@@ -1,42 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTonConnectUI, SendTransactionRequest } from '@tonconnect/ui-react';
 import { toNano, beginCell } from 'ton-core';
 import { Button } from '@mui/material';
+import { useTonConnect } from '../hooks/useTonConnect';
+import TransactionDialog from './TransactionDialog';
 
 interface TransactionButtonProps {
-    destination: string;
-    comment: string;
-    amount: string;
+  destination: string;
+  comment: string;
+  amount: string;
+  licenseId: bigint;
 }
 
-export const TransactionButton: React.FC<TransactionButtonProps> = ({ destination, comment, amount }) => {
-    const [tonConnectUI] = useTonConnectUI();
+export const TransactionButton: React.FC<TransactionButtonProps> = ({
+  destination,
+  comment,
+  amount,
+  licenseId,
+}) => {
+  const [tonConnectUI] = useTonConnectUI();
+  const [open, setOpen] = useState(false);
+  const [resultMoneyTransfer, setResultMoneyTransfer] = useState(false);
+  const { sender } = useTonConnect();
 
-    const sendTransaction = () => {
-        const body = beginCell()
-            .storeUint(0, 32) // Записываем 32 нулевых бита, указывающих на текстовый комментарий
-            .storeStringTail(comment) // Записываем текстовый комментарий
-            .endCell(); // Завершаем создание ячейки
+  const handleBuyClick = async () => {
+    const body = beginCell()
+      .storeUint(0, 32)
+      .storeStringTail(comment)
+      .endCell();
 
-        const myTransaction: SendTransactionRequest = {
-            validUntil: Math.floor(Date.now() / 1000) + 360,
-            messages: [
-                {
-                    address: destination,
-                    amount: toNano(amount).toString(),
-                    payload: body.toBoc().toString("base64") // payload с комментарием в формате base64
-                }
-            ]
-        };
-
-        tonConnectUI.sendTransaction(myTransaction);
+    const transactionRequest: SendTransactionRequest = {
+      validUntil: Math.floor(Date.now() / 1000) + 360,
+      messages: [
+        {
+          address: destination,
+          amount: toNano(amount).toString(),
+          payload: body.toBoc().toString("base64"),
+        },
+      ],
     };
 
-    return (
-        <div>
-            <Button onClick={sendTransaction} variant="contained" size="large">Buy</Button>
-        </div>
-    );
+    const result = await tonConnectUI.sendTransaction(transactionRequest);
+
+    if (result) {
+      setResultMoneyTransfer(true);
+      setOpen(true);
+    }
+  };
+
+  return (
+    <div>
+      <Button onClick={handleBuyClick} variant="contained" size="large">
+        Buy
+      </Button>
+      <TransactionDialog
+        open={open}
+        onClose={() => setOpen(false)}
+        licenseId={licenseId}
+        sender={sender}
+        resultMoneyTransfer={resultMoneyTransfer}
+      />
+    </div>
+  );
 };
 
 export default TransactionButton;

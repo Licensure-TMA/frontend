@@ -27,29 +27,6 @@ header {
   text-align: left;
 }
 
-.welcome-text {
-  font-size: 20px;
-  color: #333333;
-  text-align: center;
-}
-
-.center-button {
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .welcome-text {
-      font-size: 16px;
-      padding: 0 10px;
-  }
-
-  .center-button {
-      padding: 8px 16px;
-  }
-}
-
 #root, .App {
   display: flex;
   flex-direction: column;

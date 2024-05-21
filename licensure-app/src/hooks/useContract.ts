@@ -9,12 +9,12 @@ export function useContract() {
     const mainContract = useAsyncInitialize(async() => {
         if (!client) return;
 
-        const contract = Main.fromAddress(Address.parse("EQAMap0Keoi1yK5dCf_006AD2IxryqaLP12SOa1j5cMNEyZF"))
+        const contract = Main.fromAddress(Address.parse("EQDJTrighVS-bsWNryPEIwrAN7dqKpcalsCbmDAp_4D77aTU"))
 
         return client.open(contract) as OpenedContract<Main>
     }, [client])
 
     return {
-        mainContract: mainContract?.getArrayOfLicenses()
+        mainContract: mainContract
     }
 }

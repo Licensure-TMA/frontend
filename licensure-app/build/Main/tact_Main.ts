@@ -323,10 +323,7 @@ function dictValueParserFactoryDeploy(): DictionaryValue<FactoryDeploy> {
 
 export type LicenseCreate = {
     $$type: 'LicenseCreate';
-    licenseId: bigint;
     sellerAddress: Address;
-    buyerAddress: Address;
-    createdAt: string;
     contentName: string;
     contentDescription: string;
     contentUrls: string;
@@ -334,35 +331,26 @@ export type LicenseCreate = {
     contentCategory: string;
     contentSubcategory: string;
     price: bigint;
-    currency: string;
     allRestrictions: string;
     additionalTerms: string;
-    status: string;
 }
 
 export function storeLicenseCreate(src: LicenseCreate) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(1383533862, 32);
-        b_0.storeUint(src.licenseId, 64);
+        b_0.storeUint(2495643435, 32);
         b_0.storeAddress(src.sellerAddress);
-        b_0.storeAddress(src.buyerAddress);
-        b_0.storeStringRefTail(src.createdAt);
         b_0.storeStringRefTail(src.contentName);
         b_0.storeStringRefTail(src.contentDescription);
+        b_0.storeStringRefTail(src.contentUrls);
         let b_1 = new Builder();
-        b_1.storeStringRefTail(src.contentUrls);
         b_1.storeStringRefTail(src.licenseType);
         b_1.storeStringRefTail(src.contentCategory);
+        b_1.storeStringRefTail(src.contentSubcategory);
+        b_1.storeCoins(src.price);
         let b_2 = new Builder();
-        b_2.storeStringRefTail(src.contentSubcategory);
-        b_2.storeCoins(src.price);
-        b_2.storeStringRefTail(src.currency);
         b_2.storeStringRefTail(src.allRestrictions);
-        let b_3 = new Builder();
-        b_3.storeStringRefTail(src.additionalTerms);
-        b_3.storeStringRefTail(src.status);
-        b_2.storeRef(b_3.endCell());
+        b_2.storeStringRefTail(src.additionalTerms);
         b_1.storeRef(b_2.endCell());
         b_0.storeRef(b_1.endCell());
     };
@@ -370,33 +358,24 @@ export function storeLicenseCreate(src: LicenseCreate) {
 
 export function loadLicenseCreate(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 1383533862) { throw Error('Invalid prefix'); }
-    let _licenseId = sc_0.loadUintBig(64);
+    if (sc_0.loadUint(32) !== 2495643435) { throw Error('Invalid prefix'); }
     let _sellerAddress = sc_0.loadAddress();
-    let _buyerAddress = sc_0.loadAddress();
-    let _createdAt = sc_0.loadStringRefTail();
     let _contentName = sc_0.loadStringRefTail();
     let _contentDescription = sc_0.loadStringRefTail();
+    let _contentUrls = sc_0.loadStringRefTail();
     let sc_1 = sc_0.loadRef().beginParse();
-    let _contentUrls = sc_1.loadStringRefTail();
     let _licenseType = sc_1.loadStringRefTail();
     let _contentCategory = sc_1.loadStringRefTail();
+    let _contentSubcategory = sc_1.loadStringRefTail();
+    let _price = sc_1.loadCoins();
     let sc_2 = sc_1.loadRef().beginParse();
-    let _contentSubcategory = sc_2.loadStringRefTail();
-    let _price = sc_2.loadCoins();
-    let _currency = sc_2.loadStringRefTail();
     let _allRestrictions = sc_2.loadStringRefTail();
-    let sc_3 = sc_2.loadRef().beginParse();
-    let _additionalTerms = sc_3.loadStringRefTail();
-    let _status = sc_3.loadStringRefTail();
-    return { $$type: 'LicenseCreate' as const, licenseId: _licenseId, sellerAddress: _sellerAddress, buyerAddress: _buyerAddress, createdAt: _createdAt, contentName: _contentName, contentDescription: _contentDescription, contentUrls: _contentUrls, licenseType: _licenseType, contentCategory: _contentCategory, contentSubcategory: _contentSubcategory, price: _price, currency: _currency, allRestrictions: _allRestrictions, additionalTerms: _additionalTerms, status: _status };
+    let _additionalTerms = sc_2.loadStringRefTail();
+    return { $$type: 'LicenseCreate' as const, sellerAddress: _sellerAddress, contentName: _contentName, contentDescription: _contentDescription, contentUrls: _contentUrls, licenseType: _licenseType, contentCategory: _contentCategory, contentSubcategory: _contentSubcategory, price: _price, allRestrictions: _allRestrictions, additionalTerms: _additionalTerms };
 }
 
 function loadTupleLicenseCreate(source: TupleReader) {
-    let _licenseId = source.readBigNumber();
     let _sellerAddress = source.readAddress();
-    let _buyerAddress = source.readAddress();
-    let _createdAt = source.readString();
     let _contentName = source.readString();
     let _contentDescription = source.readString();
     let _contentUrls = source.readString();
@@ -404,19 +383,14 @@ function loadTupleLicenseCreate(source: TupleReader) {
     let _contentCategory = source.readString();
     let _contentSubcategory = source.readString();
     let _price = source.readBigNumber();
-    let _currency = source.readString();
     let _allRestrictions = source.readString();
     let _additionalTerms = source.readString();
-    let _status = source.readString();
-    return { $$type: 'LicenseCreate' as const, licenseId: _licenseId, sellerAddress: _sellerAddress, buyerAddress: _buyerAddress, createdAt: _createdAt, contentName: _contentName, contentDescription: _contentDescription, contentUrls: _contentUrls, licenseType: _licenseType, contentCategory: _contentCategory, contentSubcategory: _contentSubcategory, price: _price, currency: _currency, allRestrictions: _allRestrictions, additionalTerms: _additionalTerms, status: _status };
+    return { $$type: 'LicenseCreate' as const, sellerAddress: _sellerAddress, contentName: _contentName, contentDescription: _contentDescription, contentUrls: _contentUrls, licenseType: _licenseType, contentCategory: _contentCategory, contentSubcategory: _contentSubcategory, price: _price, allRestrictions: _allRestrictions, additionalTerms: _additionalTerms };
 }
 
 function storeTupleLicenseCreate(source: LicenseCreate) {
     let builder = new TupleBuilder();
-    builder.writeNumber(source.licenseId);
     builder.writeAddress(source.sellerAddress);
-    builder.writeAddress(source.buyerAddress);
-    builder.writeString(source.createdAt);
     builder.writeString(source.contentName);
     builder.writeString(source.contentDescription);
     builder.writeString(source.contentUrls);
@@ -424,10 +398,8 @@ function storeTupleLicenseCreate(source: LicenseCreate) {
     builder.writeString(source.contentCategory);
     builder.writeString(source.contentSubcategory);
     builder.writeNumber(source.price);
-    builder.writeString(source.currency);
     builder.writeString(source.allRestrictions);
     builder.writeString(source.additionalTerms);
-    builder.writeString(source.status);
     return builder.build();
 }
 
@@ -447,7 +419,7 @@ export type License = {
     licenseId: bigint;
     sellerAddress: Address;
     buyerAddress: Address;
-    createdAt: string;
+    createdAt: bigint;
     contentName: string;
     contentDescription: string;
     contentUrls: string;
@@ -464,23 +436,23 @@ export type License = {
 export function storeLicense(src: License) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(src.licenseId, 64);
+        b_0.storeInt(src.licenseId, 257);
         b_0.storeAddress(src.sellerAddress);
         b_0.storeAddress(src.buyerAddress);
-        b_0.storeStringRefTail(src.createdAt);
+        b_0.storeUint(src.createdAt, 32);
         b_0.storeStringRefTail(src.contentName);
         b_0.storeStringRefTail(src.contentDescription);
+        b_0.storeStringRefTail(src.contentUrls);
         let b_1 = new Builder();
-        b_1.storeStringRefTail(src.contentUrls);
         b_1.storeStringRefTail(src.licenseType);
         b_1.storeStringRefTail(src.contentCategory);
+        b_1.storeStringRefTail(src.contentSubcategory);
+        b_1.storeCoins(src.price);
         let b_2 = new Builder();
-        b_2.storeStringRefTail(src.contentSubcategory);
-        b_2.storeCoins(src.price);
         b_2.storeStringRefTail(src.currency);
         b_2.storeStringRefTail(src.allRestrictions);
+        b_2.storeStringRefTail(src.additionalTerms);
         let b_3 = new Builder();
-        b_3.storeStringRefTail(src.additionalTerms);
         b_3.storeStringRefTail(src.status);
         b_2.storeRef(b_3.endCell());
         b_1.storeRef(b_2.endCell());
@@ -490,23 +462,23 @@ export function storeLicense(src: License) {
 
 export function loadLicense(slice: Slice) {
     let sc_0 = slice;
-    let _licenseId = sc_0.loadUintBig(64);
+    let _licenseId = sc_0.loadIntBig(257);
     let _sellerAddress = sc_0.loadAddress();
     let _buyerAddress = sc_0.loadAddress();
-    let _createdAt = sc_0.loadStringRefTail();
+    let _createdAt = sc_0.loadUintBig(32);
     let _contentName = sc_0.loadStringRefTail();
     let _contentDescription = sc_0.loadStringRefTail();
+    let _contentUrls = sc_0.loadStringRefTail();
     let sc_1 = sc_0.loadRef().beginParse();
-    let _contentUrls = sc_1.loadStringRefTail();
     let _licenseType = sc_1.loadStringRefTail();
     let _contentCategory = sc_1.loadStringRefTail();
+    let _contentSubcategory = sc_1.loadStringRefTail();
+    let _price = sc_1.loadCoins();
     let sc_2 = sc_1.loadRef().beginParse();
-    let _contentSubcategory = sc_2.loadStringRefTail();
-    let _price = sc_2.loadCoins();
     let _currency = sc_2.loadStringRefTail();
     let _allRestrictions = sc_2.loadStringRefTail();
+    let _additionalTerms = sc_2.loadStringRefTail();
     let sc_3 = sc_2.loadRef().beginParse();
-    let _additionalTerms = sc_3.loadStringRefTail();
     let _status = sc_3.loadStringRefTail();
     return { $$type: 'License' as const, licenseId: _licenseId, sellerAddress: _sellerAddress, buyerAddress: _buyerAddress, createdAt: _createdAt, contentName: _contentName, contentDescription: _contentDescription, contentUrls: _contentUrls, licenseType: _licenseType, contentCategory: _contentCategory, contentSubcategory: _contentSubcategory, price: _price, currency: _currency, allRestrictions: _allRestrictions, additionalTerms: _additionalTerms, status: _status };
 }
@@ -515,7 +487,7 @@ function loadTupleLicense(source: TupleReader) {
     let _licenseId = source.readBigNumber();
     let _sellerAddress = source.readAddress();
     let _buyerAddress = source.readAddress();
-    let _createdAt = source.readString();
+    let _createdAt = source.readBigNumber();
     let _contentName = source.readString();
     let _contentDescription = source.readString();
     let _contentUrls = source.readString();
@@ -535,7 +507,7 @@ function storeTupleLicense(source: License) {
     builder.writeNumber(source.licenseId);
     builder.writeAddress(source.sellerAddress);
     builder.writeAddress(source.buyerAddress);
-    builder.writeString(source.createdAt);
+    builder.writeNumber(source.createdAt);
     builder.writeString(source.contentName);
     builder.writeString(source.contentDescription);
     builder.writeString(source.contentUrls);
@@ -614,15 +586,15 @@ export type LicenseDelete = {
 export function storeLicenseDelete(src: LicenseDelete) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(1192671483, 32);
-        b_0.storeUint(src.licenseId, 64);
+        b_0.storeUint(2185736809, 32);
+        b_0.storeInt(src.licenseId, 257);
     };
 }
 
 export function loadLicenseDelete(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 1192671483) { throw Error('Invalid prefix'); }
-    let _licenseId = sc_0.loadUintBig(64);
+    if (sc_0.loadUint(32) !== 2185736809) { throw Error('Invalid prefix'); }
+    let _licenseId = sc_0.loadIntBig(257);
     return { $$type: 'LicenseDelete' as const, licenseId: _licenseId };
 }
 
@@ -648,49 +620,49 @@ function dictValueParserLicenseDelete(): DictionaryValue<LicenseDelete> {
     }
 }
 
-export type StatusChange = {
-    $$type: 'StatusChange';
+export type LicenseBuy = {
+    $$type: 'LicenseBuy';
     licenseId: bigint;
-    newStatus: string;
+    buyerAddress: Address | undefined;
 }
 
-export function storeStatusChange(src: StatusChange) {
+export function storeLicenseBuy(src: LicenseBuy) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(501037069, 32);
-        b_0.storeUint(src.licenseId, 64);
-        b_0.storeStringRefTail(src.newStatus);
+        b_0.storeUint(2252110203, 32);
+        b_0.storeInt(src.licenseId, 257);
+        b_0.storeAddress(src.buyerAddress);
     };
 }
 
-export function loadStatusChange(slice: Slice) {
+export function loadLicenseBuy(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 501037069) { throw Error('Invalid prefix'); }
-    let _licenseId = sc_0.loadUintBig(64);
-    let _newStatus = sc_0.loadStringRefTail();
-    return { $$type: 'StatusChange' as const, licenseId: _licenseId, newStatus: _newStatus };
+    if (sc_0.loadUint(32) !== 2252110203) { throw Error('Invalid prefix'); }
+    let _licenseId = sc_0.loadIntBig(257);
+    let _buyerAddress = sc_0.loadAddress();
+    return { $$type: 'LicenseBuy' as const, licenseId: _licenseId, buyerAddress: _buyerAddress };
 }
 
-function loadTupleStatusChange(source: TupleReader) {
+function loadTupleLicenseBuy(source: TupleReader) {
     let _licenseId = source.readBigNumber();
-    let _newStatus = source.readString();
-    return { $$type: 'StatusChange' as const, licenseId: _licenseId, newStatus: _newStatus };
+    let _buyerAddress = source.readAddress();
+    return { $$type: 'LicenseBuy' as const, licenseId: _licenseId, buyerAddress: _buyerAddress };
 }
 
-function storeTupleStatusChange(source: StatusChange) {
+function storeTupleLicenseBuy(source: LicenseBuy) {
     let builder = new TupleBuilder();
     builder.writeNumber(source.licenseId);
-    builder.writeString(source.newStatus);
+    builder.writeAddress(source.buyerAddress);
     return builder.build();
 }
 
-function dictValueParserStatusChange(): DictionaryValue<StatusChange> {
+function dictValueParserLicenseBuy(): DictionaryValue<LicenseBuy> {
     return {
         serialize: (src, buidler) => {
-            buidler.storeRef(beginCell().store(storeStatusChange(src)).endCell());
+            buidler.storeRef(beginCell().store(storeLicenseBuy(src)).endCell());
         },
         parse: (src) => {
-            return loadStatusChange(src.loadRef().beginParse());
+            return loadLicenseBuy(src.loadRef().beginParse());
         }
     }
 }
@@ -708,8 +680,8 @@ function initMain_init_args(src: Main_init_args) {
 }
 
 async function Main_init(id: bigint) {
-    const __code = Cell.fromBase64('te6ccgECHQEABaEAART/APSkE/S88sgLAQIBYgIDAqrQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVEts88uCCyPhDAcx/AcoAVSBQI8sfAgL0AMs/ye1UGAQCASAPEASuAZIwf+BwIddJwh+VMCDXCx/eIIIQUncNJrqPKDDbPGwfLlXQVdCBAQEPyFXg2zzJEDQSIG6VMFn0WjCUQTP0FeIBpH/gIIIQRxa4+7rjAiCCEB3dOA26BQsGBwH20x8BghBSdw0muvLggdM/+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdQB0AHUAdAB1AHQAdQB0NQB0AHUAdAB1AHQAdQw0NQB0AH6ANQB0AHUAdABCAF+MNMfAYIQRxa4+7ry4IHTPwExgQEBbSBukjBtjo0gbvLQgG8vyFXg2zzJ4hA0EiBulTBZ9FowlEEz9BXiAaV/CwKYjpYw0x8BghAd3TgNuvLggdM/1AHQEmwS4IIQlGqYtrqOp9MfAYIQlGqYtrry4IHTPwExyAGCEK/5D1dYyx/LP8n4QgFwbds8f+AwcAkKACzUMNDUAdAB1DDQEJ8QnhCdEJwQmxCaA+QjgQEBI1n0DW+hkjBt3yBukjBtjofQ2zxsH28P4iBu8tCAby8wgQEBbSBukjBtjo0gbvLQgG8vyFXg2zzJ4gIREwJWEQEgbpUwWfRaMJRBM/QV4hERgQEBD8hV4Ns8yRA0EiBulTBZ9FowlEEz9BXiAX8SCwsBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DQH0UO/LP1AMINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAog10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbIUAnPFslQCMzIUAfPFslQBszIUAXPFslQBMzIyFAEzxbJUAPMyFjPFskBzMhQA88WyVjMyMgMAHRQBM8WyVADzFAD+gLIUATPFslQA8zIUATPFslQA8zIyFAFzxbJUATMyFAFzxbJUATMyVjMyVjMyQHMAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7AA4AmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwCFb9cPtniqBbZ42H8GBECASAUFQFIgQEBIwJZ9A1voZIwbd8gbpIwbY6H0Ns8bB9vD+IgbvLQgG8vEgH00z/6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB1AHQAdQB0AHUAdAB1AHQ1AHQAdQB0AHUAdAB1DDQ1AHQAfoA1AHQAdQB0AHUMNDUAdAB1DDQEJ8TABQQnhCdEJwQmxCaAgEgFhcCAUgbHAIRtvI7Z5tnjYZQGBkAlbd6ME4LnYerpZXPY9CdhzrJUKNs0E4TusalpWyPlmRadeW/vixHME4ECrgDcAzscpnLB1XI5LZYcE4TsunLVmnZbmdB0s2yjN0UkAFY7UTQ1AH4Y9IAAZvTH/QE0z9ZECNsE+D4KNcLCoMJuvLgiYEBAdcAAQHR2zwaAAJcAARtcAARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1kNjJBWGE2TVg1SlI3ODRxTTJZR0NXRkVvNnFtUXJNdXAyYWg4Rmk0S292YoIA==');
-    const __system = Cell.fromBase64('te6cckECHwEABasAAQHAAQEFoY83AgEU/wD0pBP0vPLICwMCAWIPBAIBIA0FAgEgCQYCAUgIBwB1sm7jQ1aXBmczovL1FtZDYyQVhhNk1YNUpSNzg0cU0yWUdDV0ZFbzZxbVFyTXVwMmFoOEZpNEtvdmKCAAEbCvu1E0NIAAYAIBIAsKAJW3ejBOC52Hq6WVz2PQnYc6yVCjbNBOE7rGpaVsj5ZkWnXlv74sRzBOBAq4A3AM7HKZywdVyOS2WHBOE7Lpy1Zp2W5nQdLNsozdFJACEbbyO2ebZ42GUB0MAAJcAhW/XD7Z4qgW2eNh/B0OAUiBAQEjAln0DW+hkjBt3yBukjBtjofQ2zxsH28P4iBu8tCAby8WAqrQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVEts88uCCyPhDAcx/AcoAVSBQI8sfAgL0AMs/ye1UHRAErgGSMH/gcCHXScIflTAg1wsf3iCCEFJ3DSa6jygw2zxsHy5V0FXQgQEBD8hV4Ns8yRA0EiBulTBZ9FowlEEz9BXiAaR/4CCCEEcWuPu64wIgghAd3TgNuhsZGBECmI6WMNMfAYIQHd04Dbry4IHTP9QB0BJsEuCCEJRqmLa6jqfTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH/gMHAVEgE6bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwTAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7ABQAmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwD5COBAQEjWfQNb6GSMG3fIG6SMG2Oh9DbPGwfbw/iIG7y0IBvLzCBAQFtIG6SMG2OjSBu8tCAby/IVeDbPMniAhETAlYRASBulTBZ9FowlEEz9BXiERGBAQEPyFXg2zzJEDQSIG6VMFn0WjCUQTP0FeIBfxYZGQH00z/6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB1AHQAdQB0AHUAdAB1AHQ1AHQAdQB0AHUAdAB1DDQ1AHQAfoA1AHQAdQB0AHUMNDUAdAB1DDQEJ8XABQQnhCdEJwQmxCaAX4w0x8BghBHFrj7uvLggdM/ATGBAQFtIG6SMG2OjSBu8tCAby/IVeDbPMniEDQSIG6VMFn0WjCUQTP0FeIBpX8ZAfRQ78s/UAwg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQCiDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFshQCc8WyVAIzMhQB88WyVAGzMhQBc8WyVAEzMjIUATPFslQA8zIWM8WyQHMyFADzxbJWMzIyBoAdFAEzxbJUAPMUAP6AshQBM8WyVADzMhQBM8WyVADzMjIUAXPFslQBMzIUAXPFslQBMzJWMzJWMzJAcwB9tMfAYIQUncNJrry4IHTP/pAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHUAdAB1AHQAdQB0AHUAdDUAdAB1AHQAdQB0AHUMNDUAdAB+gDUAdAB1AHQARwALNQw0NQB0AHUMNAQnxCeEJ0QnBCbEJoBWO1E0NQB+GPSAAGb0x/0BNM/WRAjbBPg+CjXCwqDCbry4ImBAQHXAAEB0ds8HgAEbXBvOYZ8');
+    const __code = Cell.fromBase64('te6ccgECIAEABnoAART/APSkE/S88sgLAQIBYgIDAq7QAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVE9s88uCCyPhDAcx/AcoAVTBQNMsfAgL0AMs/9ADJ7VQbBAIBIA8QBPYBkjB/4HAh10nCH5UwINcLH94gghCUwH8ruo8IMNs8bBrbPH/gIIIQgkeyabqOwzDTHwGCEIJHsmm68uCBgQEB1wABMYEBAW0gbpIwbY6NIG7y0IBvL8hV4Ns8yeIQNRIgbpUwWfRaMJRBM/QV4gGlWH/gIIIQhjx5e7oFBgsHALjTHwGCEJTAfyu68uCB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHUAdAB1AHQAdQB0AHUAdDUAdAB1AHQAdQB0AH6ANQw0NQB0AHUMNAQahBpEGgQZwL2J/kCcCDIcgHLAXABywASygfL/8nQINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiPgjizVE9OiLdQZW5kaW5ngkUd8NEFwQSxCvUJgQVxBGEF9QQh9V0IEBAQ/IVeDbPMkiEDcBIG6VMFn0WjCUQTP0FeIDpAKBAQsiCwgC1o61MNMfAYIQhjx5e7ry4IGBAQHXAPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgSbBLgghCUapi2uo6n0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/4DBwCQoAZG2BAQEhbpVbWfRZMJjIAc8AQTP0QeKBAQtAAwWBAQEhbpVbWfRZMJjIAc8AQTP0QeISA/QkgQEBI1n0DW+hkjBt3yBukjBtjofQ2zxsH28P4iBu8tCAby8wO4tFBhaWSIEBAW0gbpIwbY6NIG7y0IBvL8hV4Ns8yeICERQCVhEBIG6VMFn0WjCUQTP0FeIOC4EBARETyFXg2zzJE0VQIG6VMFn0WjCUQTP0FeICfx4LCwE6bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwNAfZQ74EBAc8AUAwg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQCiDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFhjLH8hQB88WyVAGzMhQBc8WyVAEzMhQA88WyVjMyMhQA88WyVjMyFADzxbJWMzIUAPPFskMAGpYzFj6AsjIUATPFslQA8zIUATPFslQA8zIUATPFslQA8zIyFAFzxbJUATMyVADzMkBzMkBzAHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wAOAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAk2/lqkGukwICF3XlwRBBrhYUQQIJ/3XloRMGE3XlwRG2eKoHtnjYgwbEQIBIBITADiBAQsiAoEBAUEz9ApvoZQB1wAwkltt4iBu8tCAAgEgFBUCASAXGAIRtvI7Z5tnjYhQGxYAlbd6ME4LnYerpZXPY9CdhzrJUKNs0E4TusalpWyPlmRadeW/vixHME4ECrgDcAzscpnLB1XI5LZYcE4TsunLVmnZbmdB0s2yjN0UkAAEUyECASAZGgIVtnD7Z4qge2eNifAbHAARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1mOTJORTVkU3RGU1dnYmtlSGNDSDJ1N1MxOXNQUEg4YllvTDY0RVpkdzU3WIIAFg7UTQ1AH4Y9IAAZ/TH/QE0z9ZAvQEBFAzbBTg+CjXCwqDCbry4ImBAQHXAAEB0ds8HQFIgQEBJAJZ9A1voZIwbd8gbpIwbY6H0Ns8bB9vD+IgbvLQgG8vHgAGbXBtAfaBAQHXAPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHTH9QB0AHUAdAB1AHQAdQB0NQB0AHUAdAB1AHQAfoA1DDQ1AHQAdQB0AHUAdAB1DDQ1DDQEI8fABgQjhCNEIwQixCKEIk=');
+    const __system = Cell.fromBase64('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');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -752,22 +724,23 @@ const Main_types: ABIType[] = [
     {"name":"Deploy","header":2490013878,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"DeployOk","header":2952335191,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"FactoryDeploy","header":1829761339,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"cashback","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"LicenseCreate","header":1383533862,"fields":[{"name":"licenseId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"sellerAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"buyerAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"createdAt","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentName","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentUrls","type":{"kind":"simple","type":"string","optional":false}},{"name":"licenseType","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentCategory","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentSubcategory","type":{"kind":"simple","type":"string","optional":false}},{"name":"price","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"currency","type":{"kind":"simple","type":"string","optional":false}},{"name":"allRestrictions","type":{"kind":"simple","type":"string","optional":false}},{"name":"additionalTerms","type":{"kind":"simple","type":"string","optional":false}},{"name":"status","type":{"kind":"simple","type":"string","optional":false}}]},
-    {"name":"License","header":null,"fields":[{"name":"licenseId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"sellerAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"buyerAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"createdAt","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentName","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentUrls","type":{"kind":"simple","type":"string","optional":false}},{"name":"licenseType","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentCategory","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentSubcategory","type":{"kind":"simple","type":"string","optional":false}},{"name":"price","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"currency","type":{"kind":"simple","type":"string","optional":false}},{"name":"allRestrictions","type":{"kind":"simple","type":"string","optional":false}},{"name":"additionalTerms","type":{"kind":"simple","type":"string","optional":false}},{"name":"status","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"LicenseCreate","header":2495643435,"fields":[{"name":"sellerAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"contentName","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentUrls","type":{"kind":"simple","type":"string","optional":false}},{"name":"licenseType","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentCategory","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentSubcategory","type":{"kind":"simple","type":"string","optional":false}},{"name":"price","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"allRestrictions","type":{"kind":"simple","type":"string","optional":false}},{"name":"additionalTerms","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"License","header":null,"fields":[{"name":"licenseId","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"sellerAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"buyerAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"createdAt","type":{"kind":"simple","type":"uint","optional":false,"format":32}},{"name":"contentName","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentDescription","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentUrls","type":{"kind":"simple","type":"string","optional":false}},{"name":"licenseType","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentCategory","type":{"kind":"simple","type":"string","optional":false}},{"name":"contentSubcategory","type":{"kind":"simple","type":"string","optional":false}},{"name":"price","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"currency","type":{"kind":"simple","type":"string","optional":false}},{"name":"allRestrictions","type":{"kind":"simple","type":"string","optional":false}},{"name":"additionalTerms","type":{"kind":"simple","type":"string","optional":false}},{"name":"status","type":{"kind":"simple","type":"string","optional":false}}]},
     {"name":"LicenseArray","header":null,"fields":[{"name":"map","type":{"kind":"dict","key":"int","value":"License","valueFormat":"ref"}},{"name":"length","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
-    {"name":"LicenseDelete","header":1192671483,"fields":[{"name":"licenseId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
-    {"name":"StatusChange","header":501037069,"fields":[{"name":"licenseId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newStatus","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"LicenseDelete","header":2185736809,"fields":[{"name":"licenseId","type":{"kind":"simple","type":"int","optional":false,"format":257}}]},
+    {"name":"LicenseBuy","header":2252110203,"fields":[{"name":"licenseId","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"buyerAddress","type":{"kind":"simple","type":"address","optional":false}}]},
 ]
 
 const Main_getters: ABIGetter[] = [
     {"name":"arrayOfLicenses","arguments":[],"returnType":{"kind":"simple","type":"LicenseArray","optional":false}},
-    {"name":"License","arguments":[{"name":"licenseId","type":{"kind":"simple","type":"int","optional":false,"format":257}}],"returnType":{"kind":"simple","type":"License","optional":false}},
+    {"name":"oneLicensebyId","arguments":[{"name":"licenseId","type":{"kind":"simple","type":"int","optional":false,"format":257}}],"returnType":{"kind":"simple","type":"License","optional":false}},
+    {"name":"LicenseIdbySellerAddress","arguments":[{"name":"sellerAddress","type":{"kind":"simple","type":"address","optional":false}}],"returnType":{"kind":"simple","type":"int","optional":false,"format":257}},
 ]
 
 const Main_receivers: ABIReceiver[] = [
     {"receiver":"internal","message":{"kind":"typed","type":"LicenseCreate"}},
     {"receiver":"internal","message":{"kind":"typed","type":"LicenseDelete"}},
-    {"receiver":"internal","message":{"kind":"typed","type":"StatusChange"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"LicenseBuy"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Deploy"}},
 ]
 
@@ -801,7 +774,7 @@ export class Main implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: LicenseCreate | LicenseDelete | StatusChange | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: LicenseCreate | LicenseDelete | LicenseBuy | Deploy) {
         
         let body: Cell | null = null;
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'LicenseCreate') {
@@ -810,8 +783,8 @@ export class Main implements Contract {
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'LicenseDelete') {
             body = beginCell().store(storeLicenseDelete(message)).endCell();
         }
-        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'StatusChange') {
-            body = beginCell().store(storeStatusChange(message)).endCell();
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'LicenseBuy') {
+            body = beginCell().store(storeLicenseBuy(message)).endCell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Deploy') {
             body = beginCell().store(storeDeploy(message)).endCell();
@@ -829,11 +802,19 @@ export class Main implements Contract {
         return result;
     }
     
-    async getLicense(provider: ContractProvider, licenseId: bigint) {
+    async getOneLicensebyId(provider: ContractProvider, licenseId: bigint) {
         let builder = new TupleBuilder();
         builder.writeNumber(licenseId);
-        let source = (await provider.get('License', builder.build())).stack;
+        let source = (await provider.get('oneLicensebyId', builder.build())).stack;
         const result = loadTupleLicense(source);
+        return result;
+    }
+    
+    async getLicenseIdbySellerAddress(provider: ContractProvider, sellerAddress: Address) {
+        let builder = new TupleBuilder();
+        builder.writeAddress(sellerAddress);
+        let source = (await provider.get('LicenseIdbySellerAddress', builder.build())).stack;
+        let result = source.readBigNumber();
         return result;
     }
     
