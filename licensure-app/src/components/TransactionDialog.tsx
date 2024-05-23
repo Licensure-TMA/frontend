@@ -19,7 +19,7 @@ const TransactionDialog: React.FC<TransactionDialogProps> = ({ open, onClose, re
   const handleConfirmClick = async () => {
     if (mainContract && sender) {
       try {
-        await mainContract.send(
+        const a = await mainContract.send(
           sender,
           {
             value: toNano('0.05'),
@@ -32,6 +32,8 @@ const TransactionDialog: React.FC<TransactionDialogProps> = ({ open, onClose, re
         );
         setConfirmClicked(true);
         setTransactionSuccess(true);
+
+        console.log(a)
       } catch (error) {
         console.error('Error sending transaction to contract:', error);
         setConfirmClicked(true);
