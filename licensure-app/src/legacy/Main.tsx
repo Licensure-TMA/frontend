@@ -8,13 +8,13 @@ import ContractDisplay from '../components/ContractDisplay';
 const Main: React.FC = () => {
   const { connected } = useTonConnect();
   const { mainContract } = useContract();
-  const [contract, setContract] = useState<{ $$type: 'LicenseArray'; map: unknown; length: unknown; } | undefined>(undefined);
+  const [contract] = useState<{ $$type: 'LicenseArray'; map: unknown; length: unknown; } | undefined>(undefined);
 
   useEffect(() => {
     const fetchContract = async () => {
       if (connected && mainContract) {
-        const contractData = await mainContract;
-        setContract(contractData);
+        // const contractData = await mainContract;
+        // setContract(contractData);
       }
     };
 
