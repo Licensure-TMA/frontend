@@ -9,12 +9,26 @@ export function useContract() {
   const mainContract = useAsyncInitialize(async() => {
     if (!client) return;
 
-    const contract = Main.fromAddress(Address.parse('EQAMap0Keoi1yK5dCf_006AD2IxryqaLP12SOa1j5cMNEyZF'));
+    const contract = Main.fromAddress(Address.parse('EQDJTrighVS-bsWNryPEIwrAN7dqKpcalsCbmDAp_4D77aTU'));
 
     return client.open(contract) as OpenedContract<Main>;
   }, [client]);
 
-  return {
-    mainContract: mainContract?.getArrayOfLicenses()
-  };
+  // const test = useAsyncInitialize(async () => {
+  //   if (!mainContract || !client || !wallet) return;
+
+  //   const res = mainContract.getArrayOfLicenses();
+
+  //   return client.open(Main)
+  // })
+
+  // useEffect(() => {
+  //   async function test() {
+  //     if (!mainContract) return;
+
+  //     const res = (await mainContract.getArrayOfLicenses()).map;
+  //   }
+  // }, []);
+
+  return { mainContract };
 }
