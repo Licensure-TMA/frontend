@@ -1,5 +1,5 @@
 import React from 'react';
-import LicenseCard from './LicenseCard';
+// import LicenseCard from './LicenseCard';
 
 interface ContractDisplayProps {
   contract: { $$type: 'LicenseArray'; map: { _map: Map<string, unknown> }; length: bigint; } | undefined;
@@ -10,11 +10,11 @@ const ContractDisplay: React.FC<ContractDisplayProps> = ({ contract }) => {
     return <div>Loading...</div>;
   }
 
-  const { map } = contract;
+  // const { map } = contract;
 
   return (
     <div>
-      {Array.from(map._map.entries()).map(([key, value]) => (
+      {/* {Array.from(map._map.entries()).map(([key, value]) => (
         <LicenseCard
           key={key}
           // @ts-expect-error
@@ -34,7 +34,7 @@ const ContractDisplay: React.FC<ContractDisplayProps> = ({ contract }) => {
           // @ts-expect-error
           currency={value.currency}
         />
-      ))}
+      ))} */}
     </div>
   );
 };
