@@ -6,6 +6,7 @@ import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { ErrorBoundaryWrapper } from 'components/ErrorBoundary/ErrorBoundaryWrapper/ErrorBoundaryWrapper';
 import { AppRoutes } from 'components/AppRoutes/AppRoutes';
 import { GlobalStyle } from './GlobalStyle';
+import { LicensesProvider } from 'components/LicensesContext/LicensesContext';
 
 // this manifest is used temporarily for development purposes
 const manifestUrl =
@@ -23,7 +24,9 @@ export const App = () => {
         <BrowserRouter>
           <TonConnectUIProvider manifestUrl={manifestUrl}>
             <QueryClientProvider client={queryClient}>
-              <AppRoutes />
+              <LicensesProvider>
+                <AppRoutes />
+              </LicensesProvider>
             </QueryClientProvider>
           </TonConnectUIProvider>
         </BrowserRouter>
