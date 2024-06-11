@@ -1,6 +1,6 @@
 import { LicensesContext } from 'components/LicensesContext/LicensesContext';
 import { useContext, useEffect, useState } from 'react';
-import { License } from '../../../wrappers/Main';
+import { License } from 'wrappers/Main';
 import { useTonConnect } from 'hooks/useTonConnect';
 import { LicensesList } from 'components/LicensesList/LicensesList';
 import { Container, Typography } from '@mui/material';
@@ -24,5 +24,5 @@ export const ActiveTab = () => {
     </Container>);
   }
 
-  return (<LicensesList licenses={activeLicenses} />);
+  return (<LicensesList licenses={activeLicenses} withDeleteButton />);
 };

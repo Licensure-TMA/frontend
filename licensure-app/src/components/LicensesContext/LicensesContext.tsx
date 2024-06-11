@@ -1,7 +1,7 @@
 import { useContract } from 'hooks/useContract';
 import { useTonConnect } from 'hooks/useTonConnect';
 import { createContext, useState, useEffect, ReactNode } from 'react';
-import { License } from '../../../wrappers/Main';
+import { License } from 'wrappers/Main';
 
 interface LicensesContextType {
   licenses: License[];
@@ -27,7 +27,6 @@ export const LicensesProvider = ({ children }: Props) => {
   const [loading, setLoading] = useState(true);
 
   const fetchLicenses = async () => {
-    console.log('here');
     setLoading(true);
     try {
       if (connected && mainContract) {

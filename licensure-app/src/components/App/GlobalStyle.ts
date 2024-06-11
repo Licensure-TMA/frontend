@@ -8,8 +8,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   #root {
-    background-color: #f7f9fb;
     display: flex;
     flex-direction: column;
+  }
+
+  body {
+    background-color: #f7f9fb;
   }
 `;

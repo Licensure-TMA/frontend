@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { License } from '../../../wrappers/Main';
+import { License } from 'wrappers/Main';
 import { LicensesContext } from 'components/LicensesContext/LicensesContext';
 import { useTonConnect } from 'hooks/useTonConnect';
 import { Typography } from '@mui/material';
@@ -11,9 +11,11 @@ export const SaleTab = () => {
   const { licenses } = useContext(LicensesContext);
   const { wallet } = useTonConnect();
 
+  console.log('==== licenses', licenses);
+
   useEffect(() => {
     const filteredLicenses = licenses.filter(license => {
-      return license.status !== 'Pending' && license.sellerAddress.toRawString() === wallet;
+      return license.status === 'Paid' && license.sellerAddress.toRawString() === wallet;
     });
 
     setSaleLicenses(filteredLicenses);

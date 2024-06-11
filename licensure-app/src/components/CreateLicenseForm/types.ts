@@ -1,4 +1,4 @@
-import { LicenseCreate } from '../../../wrappers/Main';
+import { LicenseCreate } from 'wrappers/Main';
 
 export enum ActionKind {
   SET_NAME = 'SET_NAME',
@@ -18,7 +18,7 @@ export type Action = {
   payload: string
 } | {
   type: ActionKind.SET_PRICE
-  payload: number
+  payload: number | string
 }
 
 export type State = Pick<LicenseCreate,
@@ -32,5 +32,5 @@ export type State = Pick<LicenseCreate,
   'allRestrictions' |
   'additionalTerms'
 > & {
-  price: number | undefined;
+  price: number | string;
 }

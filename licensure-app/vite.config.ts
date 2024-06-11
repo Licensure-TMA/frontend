@@ -11,7 +11,8 @@ export default defineConfig({
       components: '/src/components',
       hooks: '/src/hooks',
       pages: '/src/pages',
-      consts: '/src/consts'
+      consts: '/src/consts',
+      wrappers: '/wrappers',
     }
   }
 });
