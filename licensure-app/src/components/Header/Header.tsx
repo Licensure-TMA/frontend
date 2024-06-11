@@ -1,4 +1,5 @@
-import { AppBar, Avatar, Box, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useTonConnect } from 'hooks/useTonConnect';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,24 +19,27 @@ export const Header = () => {
     <AppBar position="static">
       <Toolbar>
         <Box sx={{ flexGrow: 1 }}>
-          <Typography
-            onClick={handleLogoClick}
-            variant="h6"
-            sx={{
-              mr: 2,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
+          <Button onClick={handleLogoClick}>
+            <Typography
+              variant="h6"
+              style={{ color: 'white' }}
+              sx={{
+                mr: 2,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                textDecoration: 'none',
+              }}
+            >
             Licensure
-          </Typography>
+            </Typography>
+          </Button>
         </Box>
 
-        {wallet && (<Box sx={{ flexGrow: 0 }} marginRight='0px' onClick={handleProfileClick}>
-          <Avatar>{wallet.charAt(0)}</Avatar>
+        {wallet && (<Box sx={{ flexGrow: 0 }} marginRight='0px'>
+          <IconButton size='small' onClick={handleProfileClick} >
+            <AccountCircleIcon style={{ color: 'white' }} sx={{ fontSize: 45 }} />
+          </IconButton>
         </Box>)}
       </Toolbar>
     </AppBar>

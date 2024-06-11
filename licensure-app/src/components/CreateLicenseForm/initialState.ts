@@ -8,7 +8,7 @@ export const initialState: State = {
   licenseType: '',
   contentCategory: '',
   contentSubcategory: '',
-  price: undefined,
+  price: '',
   allRestrictions: '',
   additionalTerms: '',
 };

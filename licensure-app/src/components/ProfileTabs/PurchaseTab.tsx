@@ -1,7 +1,7 @@
 import { LicensesContext } from 'components/LicensesContext/LicensesContext';
 import { useTonConnect } from 'hooks/useTonConnect';
 import { useContext, useEffect, useState } from 'react';
-import { License } from '../../../wrappers/Main';
+import { License } from 'wrappers/Main';
 import { LicensesList } from 'components/LicensesList/LicensesList';
 import { Container } from 'pages/WelcomePage/styled';
 import { Typography } from '@mui/material';
