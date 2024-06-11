@@ -3,7 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import { License } from 'wrappers/Main';
 import { useTonConnect } from 'hooks/useTonConnect';
 import { LicensesList } from 'components/LicensesList/LicensesList';
-import { Container, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import { Container } from 'pages/WelcomePage/styled';
 
 export const ActiveTab = () => {
   const [activeLicenses, setActiveLicenses] = useState<Array<License>>([]);

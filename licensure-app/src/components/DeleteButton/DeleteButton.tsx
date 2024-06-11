@@ -21,6 +21,7 @@ export const DeleteButton = ({ licenseId }: Props ) => {
           },
           {
             $$type: 'LicenseDelete',
+            sellerAddress: sender.address,
             licenseId
           }
         );
