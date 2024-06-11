@@ -11,8 +11,6 @@ export const SaleTab = () => {
   const { licenses } = useContext(LicensesContext);
   const { wallet } = useTonConnect();
 
-  console.log('==== licenses', licenses);
-
   useEffect(() => {
     const filteredLicenses = licenses.filter(license => {
       return license.status === 'Paid' && license.sellerAddress.toRawString() === wallet;
