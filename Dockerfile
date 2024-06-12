@@ -21,6 +21,8 @@ FROM nginx:alpine
 # Копируем собранные файлы из /app/dist контейнера сборки в директорию, где nginx будет раздавать статические файлы
 COPY --from=build /app/dist /usr/share/nginx/html
 
-EXPOSE 8080
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
