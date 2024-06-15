@@ -8,11 +8,14 @@ import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalance
 import { blue } from '@mui/material/colors';
 import LinkIcon from '@mui/icons-material/Link';
 import { TransactionButton } from 'components/TransactionButton/TransactionButton';
+import { fee } from 'consts/consts';
+import { useTonConnect } from 'hooks/useTonConnect';
 
 export const License = () => {
   const [searchParams] = useSearchParams();
   const { licenses } = useContext(LicensesContext);
   const [license, setLicense] = useState<LicenseType | undefined>();
+  const { sender } = useTonConnect();
 
   useEffect(() => {
     setLicense(licenses.find(({ licenseId }) => licenseId.toString() === searchParams.get('id')));
@@ -25,6 +28,7 @@ export const License = () => {
   }
 
   const href = license.contentUrls.includes('https') ? license.contentUrls : `https://${license.contentUrls}`;
+  const displayPrice = sender.address?.toString() === license.sellerAddress.toString() ? Number(license.price) : Number(license.price) * (1 + fee);
 
   return (
     <Stack spacing={4} padding={4}>
@@ -34,7 +38,7 @@ export const License = () => {
           {license.sellerAddress.toString()}
         </Typography>
         <Typography variant="h5" color={blue[700]} whiteSpace='nowrap'>
-          <strong>{Number(license.price)} TON</strong>
+          <strong>{displayPrice} TON</strong>
         </Typography>
       </Stack>
       

@@ -14,12 +14,10 @@ export const Market = () => {
   const [availableLicenses, setAvailableLicenses] = useState<Array<License>>([]);
 
   useEffect(() => {
-    console.log('useEffect []');
     fetchLicenses();
   }, []);
 
   useEffect(() => {
-    console.log('useEffect [licenses]');
     const filteredLicenses = licenses.filter(license => {
       return license.status === 'Pending' && license.sellerAddress.toRawString() !== wallet;
     });

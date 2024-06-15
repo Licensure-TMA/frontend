@@ -25,7 +25,6 @@ export const LicensesList = ({ licenses, withBuyButton, withDeleteButton }: Prop
           contentSubcategory={contentSubcategory}
           withBuyButton={withBuyButton}
           withDeleteButton={withDeleteButton}
-          withFee
         />
       ))}
     </Stack>
