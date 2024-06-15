@@ -5,21 +5,21 @@ import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalance
 import { TransactionButton } from 'components/TransactionButton/TransactionButton';
 import { DeleteButton } from 'components/DeleteButton/DeleteButton';
 import { createSearchParams, useNavigate } from 'react-router-dom';
-
-const fee = 0.05;
+import { useTonConnect } from 'hooks/useTonConnect';
+import { fee } from 'consts/consts';
 
 type LicenseProps = Pick<License, 'licenseId' | 'contentName' | 'contentDescription' | 'price' | 'sellerAddress' | 'licenseType' |'contentCategory' | 'contentSubcategory'>
 interface LicenseCardProps extends LicenseProps {
   withBuyButton?: boolean;
   withDeleteButton?: boolean;
-  withFee?: boolean;
 }
 
 export const LicenseCard = ({
-  licenseId, contentName, contentDescription, price, sellerAddress, licenseType, contentCategory, contentSubcategory, withBuyButton, withDeleteButton, withFee,
+  licenseId, contentName, contentDescription, price, sellerAddress, licenseType, contentCategory, contentSubcategory, withBuyButton, withDeleteButton,
 }: LicenseCardProps) => {
   const address = sellerAddress.toString();
   const navigate = useNavigate();
+  const { sender } = useTonConnect();
 
   const onClick = () => {
     navigate({pathname: '/license',
@@ -28,6 +28,8 @@ export const LicenseCard = ({
       }).toString()
     });
   };
+
+  const displayPrice = sender.address?.toString() === address ? Number(price) : Number(price) * (1 + fee);
 
   return (
     <Card variant="outlined" onClick={onClick}>
@@ -55,7 +57,7 @@ export const LicenseCard = ({
           {address}
         </Typography>
         <Typography variant="h5" color={blue[700]} whiteSpace='nowrap'>
-          <strong>{withFee ? Number(price) * (1 + fee) : Number(price)} TON</strong>
+          <strong>{displayPrice} TON</strong>
         </Typography>
       </Stack>
       

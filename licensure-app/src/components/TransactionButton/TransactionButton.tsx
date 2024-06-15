@@ -2,8 +2,7 @@ import { Button } from '@mui/material';
 import { useTonConnect } from 'hooks/useTonConnect';
 import { useContract } from 'hooks/useContract';
 import { toNano } from 'ton-core';
-
-const fee = 0.05;
+import { fee } from 'consts/consts';
 
 interface TransactionButtonProps {
   licenseId: bigint;
