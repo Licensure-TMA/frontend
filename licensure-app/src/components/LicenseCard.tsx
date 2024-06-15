@@ -56,9 +56,7 @@ const LicenseCard: React.FC<LicenseCardProps> = ({
           </Grid>
           <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             <TransactionButton
-              destination={safeToString(sellerAddress)}
-              comment="Buying a licence"
-              amount={safeToString(price)}
+              amount={Number(price)}
               licenseId={licenseId}
             />
           </Grid>

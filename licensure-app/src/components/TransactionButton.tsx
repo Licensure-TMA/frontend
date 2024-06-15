@@ -1,50 +1,52 @@
-import React, { useState } from 'react';
-import { useTonConnectUI, SendTransactionRequest } from '@tonconnect/ui-react';
-import { toNano, beginCell } from 'ton-core';
 import { Button } from '@mui/material';
 import { useTonConnect } from '../hooks/useTonConnect';
-import TransactionDialog from './TransactionDialog';
+import { useContract } from '../hooks/useContract';
+import { toNano } from 'ton-core';
+
+const fee = 0.05;
 
 interface TransactionButtonProps {
-  destination: string;
-  comment: string;
-  amount: string;
+  amount: number;
   licenseId: bigint;
 }
 
 export const TransactionButton: React.FC<TransactionButtonProps> = ({
-  destination,
-  comment,
   amount,
   licenseId,
 }) => {
-  const [tonConnectUI] = useTonConnectUI();
-  const [open, setOpen] = useState(false);
-  const [resultMoneyTransfer, setResultMoneyTransfer] = useState(false);
+  const { mainContract } = useContract();
   const { sender } = useTonConnect();
 
   const handleBuyClick = async () => {
-    const body = beginCell()
-      .storeUint(0, 32)
-      .storeStringTail(comment)
-      .endCell();
+    if (!mainContract || !sender) {
+      console.error('Main contract or sender is not defined.');
+      return;
+    }
 
-    const transactionRequest: SendTransactionRequest = {
-      validUntil: Math.floor(Date.now() / 1000) + 360,
-      messages: [
+    if (amount <= 0) {
+      console.error('Invalid amount value.');
+      return;
+    }
+
+    try {
+      const amountWithFee = amount * (1 + fee);
+
+      await mainContract.send(
+        sender,
         {
-          address: destination,
-          amount: toNano(amount).toString(),
-          payload: body.toBoc().toString("base64"),
+          value: toNano(amountWithFee), // cost for buyer
         },
-      ],
-    };
+        {
+          $$type: 'LicenseBuyV2',
+          buyerAddress: sender.address,
+          licenseId: licenseId,
+          cost: BigInt(amount), // price of seller, for us = amountWithFee - amount = amount * 0.05
+        }
+      );
 
-    const result = await tonConnectUI.sendTransaction(transactionRequest);
-
-    if (result) {
-      setResultMoneyTransfer(true);
-      setOpen(true);
+      console.log('Transaction successful.');
+    } catch (error) {
+      console.error('Error sending transaction to contract:', error);
     }
   };
 
@@ -53,13 +55,6 @@ export const TransactionButton: React.FC<TransactionButtonProps> = ({
       <Button onClick={handleBuyClick} variant="contained" size="large">
         Buy
       </Button>
-      <TransactionDialog
-        open={open}
-        onClose={() => setOpen(false)}
-        licenseId={licenseId}
-        sender={sender}
-        resultMoneyTransfer={resultMoneyTransfer}
-      />
     </div>
   );
 };
