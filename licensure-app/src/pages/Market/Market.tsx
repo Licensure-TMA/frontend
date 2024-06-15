@@ -9,11 +9,17 @@ import { useContext, useEffect, useState } from 'react';
 import { License } from 'wrappers/Main';
 
 export const Market = () => {
-  const { licenses } = useContext(LicensesContext);
+  const { licenses, fetchLicenses } = useContext(LicensesContext);
   const { wallet } = useTonConnect();
   const [availableLicenses, setAvailableLicenses] = useState<Array<License>>([]);
 
   useEffect(() => {
+    console.log('useEffect []');
+    fetchLicenses();
+  }, []);
+
+  useEffect(() => {
+    console.log('useEffect [licenses]');
     const filteredLicenses = licenses.filter(license => {
       return license.status === 'Pending' && license.sellerAddress.toRawString() !== wallet;
     });
