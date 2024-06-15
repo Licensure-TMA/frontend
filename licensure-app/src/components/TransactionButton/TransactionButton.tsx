@@ -1,64 +1,58 @@
-import { useTonConnectUI, SendTransactionRequest } from '@tonconnect/ui-react';
-import { Address, beginCell, toNano } from 'ton-core';
 import { Button } from '@mui/material';
-import { useContract } from 'hooks/useContract';
 import { useTonConnect } from 'hooks/useTonConnect';
+import { useContract } from 'hooks/useContract';
+import { toNano } from 'ton-core';
+
+const fee = 0.05;
 
 interface TransactionButtonProps {
   licenseId: bigint;
-  destination: Address;
-  comment: string;
   amount: bigint;
+  fullWidth?: boolean;
 }
 
-export const TransactionButton = ({ licenseId, destination, comment, amount }: TransactionButtonProps) => {
-  const [tonConnectUI] = useTonConnectUI();
+export const TransactionButton = ({ amount, licenseId, fullWidth }: TransactionButtonProps) => {
   const { mainContract } = useContract();
   const { sender } = useTonConnect();
 
-  const sendTransaction = async () => {
-    const body = beginCell()
-      .storeUint(0, 32)
-      .storeStringTail(comment)
-      .endCell();
+  const handleBuyClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation();
 
-    const myTransaction: SendTransactionRequest = {
-      validUntil: Math.floor(Date.now() / 1000) + 360,
-      messages: [
+    if (!mainContract || !sender.address) {
+      console.error('Main contract or sender is not defined.');
+      return;
+    }
+
+    if (amount <= 0) {
+      console.error('Invalid amount value.');
+      return;
+    }
+
+    try {
+      const amountWithFee = Number(amount) * (1 + fee);
+
+      await mainContract.send(
+        sender,
         {
-          address: destination.toString(),
-          amount: toNano(amount).toString(),
-          payload: body.toBoc().toString('base64')
+          value: toNano(amountWithFee),
+        },
+        {
+          $$type: 'LicenseBuyV2',
+          buyerAddress: sender.address,
+          licenseId: licenseId,
+          cost: amount,
         }
-      ]
-    };
-
-    await tonConnectUI.sendTransaction(myTransaction);
-
-    if (mainContract && sender && sender.address) {
-      try {
-        await mainContract.send(
-          sender,
-          {
-            value: toNano('0.05'),
-          },
-          {
-            $$type: 'LicenseBuy',
-            buyerAddress: sender.address,
-            licenseId
-          }
-        );
-      } catch (error) {
-        console.error('Error sending transaction to contract:', error);
-      }
+      );
+    } catch (error) {
+      console.error('Error sending transaction to contract:', error);
     }
   };
 
   return (
     <div>
-      <Button onClick={sendTransaction} variant="contained" size="large">Buy</Button>
+      <Button onClick={handleBuyClick} variant="contained" size="large" fullWidth={fullWidth} >
+        Buy
+      </Button>
     </div>
   );
 };
-
-export default TransactionButton;

@@ -8,8 +8,12 @@ import { Container } from 'pages/WelcomePage/styled';
 
 export const ActiveTab = () => {
   const [activeLicenses, setActiveLicenses] = useState<Array<License>>([]);
-  const { licenses } = useContext(LicensesContext);
+  const { licenses, fetchLicenses } = useContext(LicensesContext);
   const { wallet } = useTonConnect();
+
+  useEffect(() => {
+    fetchLicenses();
+  }, []);
 
   useEffect(() => {
     const filteredLicenses = licenses.filter(license => {

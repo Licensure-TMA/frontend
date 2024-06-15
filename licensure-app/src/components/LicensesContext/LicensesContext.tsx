@@ -20,7 +20,6 @@ interface Props {
 }
 
 export const LicensesProvider = ({ children }: Props) => {
-
   const { connected } = useTonConnect();
   const { mainContract } = useContract();
   const [licenses, setLicenses] = useState<Array<License>>([]);
@@ -42,6 +41,9 @@ export const LicensesProvider = ({ children }: Props) => {
 
   useEffect(() => {
     fetchLicenses();
+    // fetchLicenses(); // Initial fetch
+    // const interval = setInterval(fetchLicenses, 10000); // Fetch every 60 seconds
+    // return () => clearInterval(interval); // Clean up interval on unmount
   }, [connected, mainContract]);
 
   return (

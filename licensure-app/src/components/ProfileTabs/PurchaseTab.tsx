@@ -8,8 +8,12 @@ import { Typography } from '@mui/material';
 
 export const PurchaseTab = () => {
   const [purchaseLicenses, setPurchaseLicenses] = useState<Array<License>>([]);
-  const { licenses } = useContext(LicensesContext);
+  const { licenses, fetchLicenses } = useContext(LicensesContext);
   const { wallet } = useTonConnect();
+
+  useEffect(() => {
+    fetchLicenses();
+  }, []);
 
   useEffect(() => {
     const filteredLicenses = licenses.filter(license => {

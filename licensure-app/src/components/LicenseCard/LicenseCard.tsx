@@ -2,34 +2,41 @@ import { Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 import { License } from 'wrappers/Main';
 import { blue } from '@mui/material/colors';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-// import TransactionButton from 'components/legacy/TransactionButton';
-import TransactionButton from 'components/TransactionButton/TransactionButton';
+import { TransactionButton } from 'components/TransactionButton/TransactionButton';
 import { DeleteButton } from 'components/DeleteButton/DeleteButton';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 
+const fee = 0.05;
 
 type LicenseProps = Pick<License, 'licenseId' | 'contentName' | 'contentDescription' | 'price' | 'sellerAddress' | 'licenseType' |'contentCategory' | 'contentSubcategory'>
 interface LicenseCardProps extends LicenseProps {
   withBuyButton?: boolean;
   withDeleteButton?: boolean;
+  withFee?: boolean;
 }
-// const safeToString = (data: unknown) => {
-//   return (data && typeof data.toString === 'function') ? data.toString() : '';
-// };
 
 export const LicenseCard = ({
-  licenseId, contentName, contentDescription, price, sellerAddress, licenseType, contentCategory, contentSubcategory, withBuyButton, withDeleteButton,
+  licenseId, contentName, contentDescription, price, sellerAddress, licenseType, contentCategory, contentSubcategory, withBuyButton, withDeleteButton, withFee,
 }: LicenseCardProps) => {
   const address = sellerAddress.toString();
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    navigate({pathname: '/license',
+      search: createSearchParams({
+        id: licenseId.toString(),
+      }).toString()
+    });
+  };
 
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" onClick={onClick}>
       <Stack direction='row' justifyContent='space-between' margin='8px' marginBottom='0px'>
         <Typography variant="h5" color={blue[700]}>
           <strong>{contentName}</strong>
         </Typography>
-        {withBuyButton && <TransactionButton destination={sellerAddress} comment={'license purchase'} amount={price} licenseId={licenseId} />}
+        {withBuyButton && <TransactionButton amount={price} licenseId={licenseId} />}
         {withDeleteButton && <DeleteButton licenseId={licenseId} />}
-        {/* <TransactionButton destination={safeToString(sellerAddress)} comment={'license purchase'} amount={safeToString(price)} licenseId={licenseId} /> */}
       </Stack>
 
       <CardContent>
@@ -48,7 +55,7 @@ export const LicenseCard = ({
           {address}
         </Typography>
         <Typography variant="h5" color={blue[700]} whiteSpace='nowrap'>
-          <strong>{Number(price)} TON</strong>
+          <strong>{withFee ? Number(price) * (1 + fee) : Number(price)} TON</strong>
         </Typography>
       </Stack>
       

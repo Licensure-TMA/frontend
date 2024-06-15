@@ -11,6 +11,9 @@ import { IntegerInput } from 'components/IntegerInput/IntegerInput';
 import { UrlInput } from 'components/UrlInput/UrlInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useNavigate } from 'react-router-dom';
+import { TitleInput } from 'components/TitleInput/TitleInput';
+import { DescriptionInput } from 'components/DescriptionInput/DescriptionInput';
+import { SubCategorySelect } from 'components/SubCategorySelect/SubCategorySelect';
 
 export const CreateLicenseForm = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -41,7 +44,7 @@ export const CreateLicenseForm = () => {
     dispatch({ type: ActionKind.SET_CATEGORY, payload: event.target.value });
   };
 
-  const changeSubcategory: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
+  const changeSubcategory = (event: SelectChangeEvent) => {
     dispatch({ type: ActionKind.SET_SUBCATEGORY, payload: event.target.value });
   };
 
@@ -76,8 +79,8 @@ export const CreateLicenseForm = () => {
 
   return (
     <Stack spacing={4} padding={4}>
-      <TextField label="Title" required value={state.contentName} onChange={changeName} />
-      <TextField label="Content Description" required value={state.contentDescription} onChange={changeDescription} />
+      <TitleInput value={state.contentName} onChange={changeName} setIsError={setIsError} />
+      <DescriptionInput value={state.contentDescription} onChange={changeDescription} setIsError={setIsError}/>
       <UrlInput label="Content Url" value={state.contentUrls} onChange={changeUrls} setIsError={setIsError} />
       <FormControl fullWidth>
         <InputLabel id="license-type-select-label" required>License Type</InputLabel>
@@ -107,7 +110,7 @@ export const CreateLicenseForm = () => {
           <MenuItem value={'art'}>Art</MenuItem>
         </Select>
       </FormControl>
-      <TextField label="Content Subcategory" value={state.contentSubcategory} onChange={changeSubcategory} />
+      <SubCategorySelect value={state.contentSubcategory} category={state.contentCategory} onChange={changeSubcategory} />
       <IntegerInput label="Price" value={state.price} onChange={changePrice} setIsError={setIsError} />
       {/* <TextField label="All Restrictions" value={state.allRestrictions} onChange={changeRestrictions} /> */}
       <TextField label="Additional Terms" value={state.additionalTerms} onChange={changeAdditionalTerms} />

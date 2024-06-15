@@ -1,7 +1,8 @@
 import { TextField } from '@mui/material';
 import { ChangeEventHandler, useState } from 'react';
 
-const urlRegExp = /^((ftp|http|https):\/\/)?(www\.)?([A-Za-zА-Яа-я0-9]{1}[A-Za-zА-Яа-я0-9-]*\.?)*\.{1}[A-Za-zА-Яа-я0-9-]{2,8}(\/([\w#!:.?+=&%@!\-/])*)?/;
+// const urlRegExp = /^((ftp|http|https):\/\/)?(www\.)?([A-Za-zА-Яа-я0-9]{1}[A-Za-zА-Яа-я0-9-]*\.?)*\.{1}[A-Za-zА-Яа-я0-9-]{2,8}(\/([\w#!:.?+=&%@!\-/])*)?/;
+const combinedPattern = /^(https?:\/\/)?(www\.)?((youtube\.com|youtu\.be)\/.+|(pinterest\.[a-z]{2,6}\/.+)|(open\.spotify\.com\/.+))$/;
 
 interface Props {
   label: string;
@@ -14,7 +15,7 @@ export const UrlInput = ({ label, value, onChange, setIsError }: Props) => {
   const [error, setError] = useState('');
 
   const validate = (value: string) => {
-    if (!urlRegExp.test(value)) return 'Only links can be entered';
+    if (!combinedPattern.test(value)) return 'Only certain types of links (youtube, pinterest, spotify) can be entered';
     return '';
   };
 

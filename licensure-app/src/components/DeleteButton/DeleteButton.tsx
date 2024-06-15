@@ -1,7 +1,9 @@
-import { Button } from '@mui/material';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useContract } from 'hooks/useContract';
 import { useTonConnect } from 'hooks/useTonConnect';
 import { toNano } from 'ton-core';
+import { red } from '@mui/material/colors';
 
 interface Props {
   licenseId: bigint;
@@ -11,10 +13,12 @@ export const DeleteButton = ({ licenseId }: Props ) => {
   const { mainContract } = useContract();
   const { sender } = useTonConnect();
 
-  const onDelete = async () => {
+  const onDelete = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation();
+
     if (mainContract && sender && sender.address) {
       try {
-        await mainContract.send(
+        mainContract.send(
           sender,
           {
             value: toNano('0.05'),
@@ -32,6 +36,8 @@ export const DeleteButton = ({ licenseId }: Props ) => {
   };
 
   return (
-    <Button variant="contained" color="error" size='large' onClick={onDelete}>Delete</Button>
+    <IconButton onClick={onDelete} >
+      <DeleteIcon style={{ color: red['A700'] }} />
+    </IconButton>
   );
 };

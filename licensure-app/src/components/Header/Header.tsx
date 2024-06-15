@@ -2,6 +2,7 @@ import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/mater
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useTonConnect } from 'hooks/useTonConnect';
 import { useNavigate } from 'react-router-dom';
+import { TonConnectButtonCustom } from './styled';
 
 export const Header = () => {
   const { wallet } = useTonConnect();
@@ -41,6 +42,8 @@ export const Header = () => {
             <AccountCircleIcon style={{ color: 'white' }} sx={{ fontSize: 45 }} />
           </IconButton>
         </Box>)}
+
+        <TonConnectButtonCustom />
       </Toolbar>
     </AppBar>
   );
