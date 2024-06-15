@@ -18,12 +18,12 @@ export const Header = () => {
 
   return (
     <AppBar position="static">
-      <Toolbar>
+      <Toolbar style={{ padding: '0px 8px' }}>
         <Box sx={{ flexGrow: 1 }}>
           <Button onClick={handleLogoClick}>
             <Typography
               variant="h6"
-              style={{ color: 'white' }}
+              style={{ color: 'white', margin: '0px' }}
               sx={{
                 mr: 2,
                 fontFamily: 'monospace',
@@ -31,6 +31,7 @@ export const Header = () => {
                 letterSpacing: '.3rem',
                 textDecoration: 'none',
               }}
+              marginRight={0}
             >
             Licensure
             </Typography>
