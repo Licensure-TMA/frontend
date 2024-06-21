@@ -1,15 +1,14 @@
 
-import { Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import { Header } from 'components/Header/Header';
 import { LicensesContext } from 'components/LicensesContext/LicensesContext';
 import { LicensesList } from 'components/LicensesList/LicensesList';
 import { useTonConnect } from 'hooks/useTonConnect';
-import { Container } from 'pages/WelcomePage/styled';
 import { useContext, useEffect, useState } from 'react';
 import { License } from 'wrappers/Main';
 
 export const Market = () => {
-  const { licenses, fetchLicenses } = useContext(LicensesContext);
+  const { licenses, loading, fetchLicenses } = useContext(LicensesContext);
   const { wallet } = useTonConnect();
   const [availableLicenses, setAvailableLicenses] = useState<Array<License>>([]);
 
@@ -25,20 +24,12 @@ export const Market = () => {
     setAvailableLicenses(filteredLicenses);
   }, [licenses]);
 
-  const content = !availableLicenses.length ? (
-    <Container>
-      <Typography variant="h5">Available licenses will appear here</Typography>
-    </Container>
-  ) : (
-    <Stack spacing={4} padding={4}>
-      <LicensesList licenses={availableLicenses} withBuyButton />
-    </Stack>
-  );
-
   return (
     <>
       <Header />
-      {content}
+      <Stack height='100%' spacing={4} padding={4}>
+        <LicensesList licenses={availableLicenses} loading={loading} withBuyButton />
+      </Stack>
     </>
   );
 };

@@ -7,6 +7,7 @@ import { DeleteButton } from 'components/DeleteButton/DeleteButton';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import { useTonConnect } from 'hooks/useTonConnect';
 import { fee } from 'consts/consts';
+import { camelCaseToPretty } from 'utils/camelCaseToPretty';
 
 type LicenseProps = Pick<License, 'licenseId' | 'contentName' | 'contentDescription' | 'price' | 'sellerAddress' | 'licenseType' |'contentCategory' | 'contentSubcategory'>
 interface LicenseCardProps extends LicenseProps {
@@ -33,8 +34,8 @@ export const LicenseCard = ({
 
   return (
     <Card variant="outlined" onClick={onClick}>
-      <Stack direction='row' justifyContent='space-between' margin='8px' marginBottom='0px'>
-        <Typography variant="h5" color={blue[700]}>
+      <Stack direction='row' justifyContent='space-between' margin='8px' marginBottom='0px' alignItems='center' spacing={2}>
+        <Typography variant="h5" color={blue[700]} overflow='hidden' textOverflow='ellipsis' whiteSpace='nowrap'>
           <strong>{contentName}</strong>
         </Typography>
         {withBuyButton && <TransactionButton amount={price} licenseId={licenseId} />}
@@ -42,12 +43,13 @@ export const LicenseCard = ({
       </Stack>
 
       <CardContent>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+        <Typography sx={{ mb: 1.5 }} color="text.secondary" display='-webkit-box' overflow='hidden' textOverflow='ellipsis' lineHeight={1.5}
+          style={{ WebkitBoxOrient: 'vertical', WebkitLineClamp: 5 }}>
           {contentDescription}
         </Typography>
         <Stack direction="row" spacing={1}>
-          <Chip label={licenseType}/>
-          <Chip label={`${contentCategory} > ${contentSubcategory}`} />
+          <Chip label={camelCaseToPretty(licenseType)}/>
+          <Chip label={`${camelCaseToPretty(contentCategory)} > ${camelCaseToPretty(contentSubcategory)}`} />
         </Stack>
       </CardContent>
 

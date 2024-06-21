@@ -33,6 +33,9 @@
       "consts/*": [
         "src/consts/*"
       ],
+      "utils/*": [
+        "src/utils/*"
+      ],
       "wrappers/*": [
         "wrappers/*"
       ]

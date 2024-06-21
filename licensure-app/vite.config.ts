@@ -12,6 +12,7 @@ export default defineConfig({
       hooks: '/src/hooks',
       pages: '/src/pages',
       consts: '/src/consts',
+      utils: '/src/utils',
       wrappers: '/wrappers',
     }
   }

@@ -1,18 +1,16 @@
 import { TonConnectButton } from '@tonconnect/ui-react';
 import Typography from '@mui/material/Typography';
-import { Container, CustomStack } from './styled';
+import { Stack } from '@mui/material';
 
 export const WelcomePage = () => {
   return (
-    <Container>
-      <CustomStack spacing={6} direction='column'>
-        <Container>
-          <Typography variant="h5">Welcome to Licensure!</Typography>
-          <Typography variant="h5">Start monetizing your ideas with us!</Typography>
-        </Container>
+    <Stack alignItems='center' spacing={6} direction='column' margin='auto'>
+      <Stack alignItems='center' >
+        <Typography variant="h6">Welcome to Licensure!</Typography>
+        <Typography variant="h6">Start monetizing your ideas with us!</Typography>
+      </Stack>
 
-        <TonConnectButton />
-      </CustomStack>
-    </Container>
+      <TonConnectButton />
+    </Stack>
   );
 };
