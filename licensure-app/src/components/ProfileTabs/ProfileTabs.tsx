@@ -11,7 +11,7 @@ export const ProfileTabs = () => {
   };
 
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <Tabs value={value} onChange={handleChange}>
         {tabs.map(tab => <Tab label={tab} key={tab} />)}
       </Tabs>

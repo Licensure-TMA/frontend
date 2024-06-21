@@ -23,7 +23,7 @@ export const CustomTabPanel = (props: TabPanelProps) => {
     <div
       role="tabpanel"
       hidden={value !== index}
-      style={{ marginTop: '32px' }}
+      style={{ marginTop: '32px', height: '90%' }}
     >
       {tab}
     </div>

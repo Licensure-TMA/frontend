@@ -1,6 +1,5 @@
-import { Chip, Link, Stack, Typography } from '@mui/material';
+import { Box, Chip, Link, Stack, Typography } from '@mui/material';
 import { LicensesContext } from 'components/LicensesContext/LicensesContext';
-import { Container } from 'pages/WelcomePage/styled';
 import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { License as LicenseType } from 'wrappers/Main';
@@ -10,6 +9,8 @@ import LinkIcon from '@mui/icons-material/Link';
 import { TransactionButton } from 'components/TransactionButton/TransactionButton';
 import { fee } from 'consts/consts';
 import { useTonConnect } from 'hooks/useTonConnect';
+import CircularProgress from '@mui/material/CircularProgress';
+import { camelCaseToPretty } from 'utils/camelCaseToPretty';
 
 export const License = () => {
   const [searchParams] = useSearchParams();
@@ -19,16 +20,17 @@ export const License = () => {
 
   useEffect(() => {
     setLicense(licenses.find(({ licenseId }) => licenseId.toString() === searchParams.get('id')));
-  }, []);
+  }, [licenses]);
 
   if (!license) {
-    return (<Container>
-      <Typography variant="h5">License will appear here</Typography>
-    </Container>);
+    return (<Box margin='auto'>
+      <CircularProgress/>
+    </Box>);
   }
 
   const href = license.contentUrls.includes('https') ? license.contentUrls : `https://${license.contentUrls}`;
   const displayPrice = sender.address?.toString() === license.sellerAddress.toString() ? Number(license.price) : Number(license.price) * (1 + fee);
+  const shouldShowBuy = sender.address?.toString() !== license.sellerAddress.toString() && license.status === 'Pending';
 
   return (
     <Stack spacing={4} padding={4}>
@@ -43,8 +45,8 @@ export const License = () => {
       </Stack>
       
       <Stack direction="row" spacing={1}>
-        <Chip color="primary" label={license.licenseType}/>
-        <Chip color="primary" label={`${license.contentCategory} > ${license.contentSubcategory}`} />
+        <Chip color="primary" label={camelCaseToPretty(license.licenseType)}/>
+        <Chip color="primary" label={`${camelCaseToPretty(license.contentCategory)} > ${camelCaseToPretty(license.contentSubcategory)}`} />
       </Stack>
 
       <Stack>
@@ -72,9 +74,7 @@ export const License = () => {
         </Stack>
       </Link>
 
-      {/* <Link rel='noopener noreferrer' to='google.com'>test</Link> */}
-
-      <TransactionButton licenseId={license.licenseId} amount={license.price} fullWidth />
+      {shouldShowBuy && <TransactionButton licenseId={license.licenseId} amount={license.price} fullWidth />}
     </Stack>
   );
 };

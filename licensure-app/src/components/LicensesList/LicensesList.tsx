@@ -1,14 +1,26 @@
 import { LicenseCard } from 'components/LicenseCard/LicenseCard';
-import { Stack } from '@mui/material';
+import { Box, CircularProgress, Stack, Typography } from '@mui/material';
 import { License } from 'wrappers/Main';
 
 interface Props {
   licenses: Array<License>;
+  loading: boolean;
   withBuyButton?: boolean;
   withDeleteButton?: boolean;
 }
 
-export const LicensesList = ({ licenses, withBuyButton, withDeleteButton }: Props) => {
+export const LicensesList = ({ licenses, loading, withBuyButton, withDeleteButton }: Props) => {
+  if (loading) return (
+    <Box display='flex' height='100%' justifyContent='center' alignItems='center'>
+      <CircularProgress />
+    </Box>
+  );
+
+  if (!licenses) return (
+    <Box display='flex' height='100%' justifyContent='center' alignItems='center'>
+      <Typography variant="h5">No licenses</Typography>
+    </Box>
+  );
 
   return (
     <Stack spacing={4}>

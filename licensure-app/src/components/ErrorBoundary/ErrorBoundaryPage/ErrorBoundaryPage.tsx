@@ -1,7 +1,6 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { Container } from './styled';
 
 export const ErrorBoundaryPage = () => {
   const refreshPage = () => {
@@ -9,11 +8,11 @@ export const ErrorBoundaryPage = () => {
   };
 
   return (
-    <Container>
+    <Box margin='auto'>
       <Stack spacing={4} direction='row'>
         <Typography variant="h5">Error</Typography>
         <Button variant="outlined" onClick={refreshPage}>Refresh</Button>
       </Stack>
-    </Container>
+    </Box>
   );
 };

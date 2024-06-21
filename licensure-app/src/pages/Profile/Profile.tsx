@@ -7,7 +7,7 @@ export const Profile = () => {
   return (
     <>
       <Header />
-      <Stack spacing={4} padding={4}>
+      <Stack spacing={4} padding={4} height='100%'>
         <CreateLicenseButton />
         <ProfileTabs />
       </Stack>

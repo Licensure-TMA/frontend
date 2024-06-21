@@ -3,12 +3,10 @@ import { useTonConnect } from 'hooks/useTonConnect';
 import { useContext, useEffect, useState } from 'react';
 import { License } from 'wrappers/Main';
 import { LicensesList } from 'components/LicensesList/LicensesList';
-import { Container } from 'pages/WelcomePage/styled';
-import { Typography } from '@mui/material';
 
 export const PurchaseTab = () => {
   const [purchaseLicenses, setPurchaseLicenses] = useState<Array<License>>([]);
-  const { licenses, fetchLicenses } = useContext(LicensesContext);
+  const { licenses, loading, fetchLicenses } = useContext(LicensesContext);
   const { wallet } = useTonConnect();
 
   useEffect(() => {
@@ -23,11 +21,5 @@ export const PurchaseTab = () => {
     setPurchaseLicenses(filteredLicenses);
   }, licenses);
 
-  if (!purchaseLicenses.length) {
-    return (<Container>
-      <Typography variant="h5">Your ourder will appear here</Typography>
-    </Container>);
-  }
-
-  return (<LicensesList licenses={purchaseLicenses} />);
+  return (<LicensesList licenses={purchaseLicenses} loading={loading} />);
 };

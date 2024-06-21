@@ -2,13 +2,11 @@ import { useContext, useEffect, useState } from 'react';
 import { License } from 'wrappers/Main';
 import { LicensesContext } from 'components/LicensesContext/LicensesContext';
 import { useTonConnect } from 'hooks/useTonConnect';
-import { Typography } from '@mui/material';
 import { LicensesList } from 'components/LicensesList/LicensesList';
-import { Container } from 'pages/WelcomePage/styled';
 
 export const SaleTab = () => {
   const [saleLicenses, setSaleLicenses] = useState<Array<License>>([]);
-  const { licenses, fetchLicenses } = useContext(LicensesContext);
+  const { licenses, loading, fetchLicenses } = useContext(LicensesContext);
   const { wallet } = useTonConnect();
 
   useEffect(() => {
@@ -23,11 +21,5 @@ export const SaleTab = () => {
     setSaleLicenses(filteredLicenses);
   }, [licenses]);
 
-  if (!saleLicenses.length) {
-    return (<Container>
-      <Typography variant="h5">Your ourder will appear here</Typography>
-    </Container>);
-  }
-
-  return (<LicensesList licenses={saleLicenses} />);
+  return (<LicensesList licenses={saleLicenses} loading={loading} />);
 };
