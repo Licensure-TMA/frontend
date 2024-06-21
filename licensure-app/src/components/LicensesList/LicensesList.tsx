@@ -23,7 +23,7 @@ export const LicensesList = ({ licenses, loading, withBuyButton, withDeleteButto
   );
 
   return (
-    <Stack spacing={4}>
+    <Stack spacing={4} paddingBottom='32px'>
       {licenses.map(({ licenseId, contentName, contentDescription, price, sellerAddress, licenseType, contentCategory, contentSubcategory }) => (
         <LicenseCard
           key={licenseId}
